@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react'
 import { Check, Copy, FileImage } from 'lucide-react'
-import Image from 'next/image'
 
 interface TagListProps {
   tags: { [filename: string]: string[] }
@@ -39,12 +37,10 @@ export default function TagList({ tags, previews }: TagListProps) {
               <td className="border border-amber-300 px-4 py-2">
                 <div className="w-14 h-14 relative bg-amber-50 rounded-md flex items-center justify-center overflow-hidden">
                   {previews[filename] ? (
-                    <Image 
+                    <img 
                       src={previews[filename]}
                       alt={`Preview of ${filename}`}
-                      fill
-                      className="object-contain"
-                      sizes="56px"
+                      className="w-full h-full object-contain"
                     />
                   ) : (
                     <FileImage className="w-6 h-6 text-amber-400" />
