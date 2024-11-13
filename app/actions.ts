@@ -1,5 +1,3 @@
-import { OpenAI } from 'openai'
-
 type ChatResponse = {
   choices: Array<{
     message: {
