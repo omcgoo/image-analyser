@@ -1,13 +1,13 @@
 'use server'
 
 import OpenAI from 'openai'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
+
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
-export async function analyzeSVG(prevState: any, formData: FormData) {
+export async function analyzeSVG(prevState: unknown, formData: FormData) {
   const svgContent = formData.get('svgContent') as string
   if (!svgContent) {
     return { error: 'No SVG content provided' }
