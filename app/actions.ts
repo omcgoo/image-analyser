@@ -1,37 +1,45 @@
-'use server'
-
-import OpenAI from 'openai'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
+import { OpenAI } from 'openai'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY,
 })
 
-export async function analyzeSVG(prevState: any, formData: FormData) {
-  const svgContent = formData.get('svgContent') as string
-  if (!svgContent) {
-    return { error: 'No SVG content provided' }
-  }
-
+export async function analyzeImage(formData: FormData) {
   try {
+    const image = formData.get('image') as File
+    const prompt = formData.get('prompt') as string
+    const temperature = parseFloat(formData.get('temperature') as string)
+    
+    // Your image analysis logic here
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-4-vision-preview",
       messages: [
         {
-          role: 'system',
-          content: 'You are an AI assistant that analyzes an SVG appearance and provides relevant tags for searching. Return only a comma-separated list of tags, with no additional text or explanation.'
+          role: "user",
+          content: [
+            { type: "text", text: prompt },
+            {
+              type: "image_url",
+              image_url: {
+                url: await fileToBase64(image),
+              },
+            },
+          ],
         },
-        {
-          role: 'user',
-          content: `Analyze this SVG and provide a list of relevant tags for searching (eg. a disk may be used for saving): ${svgContent}`
-        }
       ],
+      max_tokens: 300,
+      temperature: temperature,
     })
 
-    const tags = response.choices[0]?.message?.content || ''
-    return { tags: tags.split(',').map(tag => tag.trim()) }
+    return { tags: { [image.name]: response.choices[0].message.content?.split(',').map(tag => tag.trim()) || [] } }
   } catch (error) {
-    console.error('Error in analyzeSVG:', error)
-    return { error: 'Failed to analyze SVG' }
+    console.error('Error analyzing image:', error)
+    throw new Error('Failed to analyze image')
   }
+}
+
+async function fileToBase64(file: File): Promise<string> {
+  const bytes = await file.arrayBuffer()
+  const buffer = Buffer.from(bytes)
+  return `data:${file.type};base64,${buffer.toString('base64')}`
 }
