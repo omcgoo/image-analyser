@@ -1,11 +1,11 @@
 'use server'
 
-import OpenAI from 'openai'
-
+import { OpenAI } from 'openai'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
+
 
 export async function analyzeSVG(prevState: unknown, formData: FormData) {
   const svgContent = formData.get('svgContent') as string
