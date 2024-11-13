@@ -1,5 +1,3 @@
-import { OpenAI } from 'openai'
-
 type ChatResponse = {
   choices: Array<{
     message: {
@@ -8,11 +6,17 @@ type ChatResponse = {
   }>;
 };
 
+type ImageAnalysisResponse = {
+  tags: {
+    [filename: string]: string[]
+  }
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
-export async function analyzeImage(formData: FormData) {
+export async function analyzeImage(formData: FormData): Promise<ImageAnalysisResponse> {
   try {
     const image = formData.get('image') as File
     const prompt = formData.get('prompt') as string
