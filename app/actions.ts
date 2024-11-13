@@ -1,5 +1,13 @@
 import { OpenAI } from 'openai'
 
+type ChatResponse = {
+  choices: Array<{
+    message: {
+      content: string | null;
+    };
+  }>;
+};
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
@@ -11,7 +19,7 @@ export async function analyzeImage(formData: FormData) {
     const temperature = parseFloat(formData.get('temperature') as string)
     
     // Your image analysis logic here
-    const response = await openai.chat.completions.create({
+    const response: ChatResponse = await openai.chat.completions.create({
       model: "gpt-4-vision-preview",
       messages: [
         {
