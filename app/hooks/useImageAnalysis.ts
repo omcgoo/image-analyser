@@ -12,7 +12,7 @@ export default function useImageAnalysis(isTestMode: boolean) {
   const generateTestTags = (filename: string): string[] => {
     const baseTags = ['android', 'mobile', 'app', 'development', 'ui', 'ux', 'design', 'code', 'programming', 'software']
     const uniqueTags = filename.split(/[.-]/).filter(tag => tag.length > 2)
-    const combinedTags = [...new Set([...baseTags, ...uniqueTags])]
+    const combinedTags = Array.from(new Set([...baseTags, ...uniqueTags]))
     return combinedTags.slice(0, Math.min(10, combinedTags.length))
   }
 

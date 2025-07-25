@@ -1,5 +1,6 @@
 import React, { useState, useRef, DragEvent } from 'react';
 import { Loader2, Upload } from 'lucide-react';
+import Image from 'next/image';
 
 interface ImageUploaderProps {
   onUpload: (files: File[] | { [filename: string]: File }, previews: { [filename: string]: string }) => void;
@@ -97,7 +98,7 @@ export default function ImageUploader({ onUpload, isLoading }: ImageUploaderProp
           aria-label="Select images"
         />
         {preview ? (
-          <img src={preview} alt="Upload preview" className="max-w-full max-h-full object-contain" />
+          <Image src={preview} alt="Upload preview" className="max-w-full max-h-full object-contain" width={256} height={256} />
         ) : (
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <Upload className="w-10 h-10 mb-3 text-amber-400" aria-hidden="true" />
