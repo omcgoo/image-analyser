@@ -5,7 +5,7 @@ import ImageUploader from './components/ImageUploader'
 import TagList from './components/TagList'
 import SettingsPanel from './components/SettingsPanel'
 import useImageAnalysis from './hooks/useImageAnalysis'
-import CustomSwitch from './components/ui/custom-switch'
+import PasswordProtectedSwitch from './components/ui/password-protected-switch'
 
 
 export default function Page() {
@@ -51,11 +51,12 @@ export default function Page() {
               Image Tag Generator
             </h1>
           </div>
-          <CustomSwitch
+          <PasswordProtectedSwitch
             isOn={!isTestMode}
             handleToggle={handleTestModeToggle}
             onLabel="GPT on"
             offLabel="GPT off"
+            password="admin123"
           />
         </div>
 
