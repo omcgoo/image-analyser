@@ -56,7 +56,6 @@ export default function Page() {
             handleToggle={handleTestModeToggle}
             onLabel="GPT on"
             offLabel="GPT off"
-            password="admin123"
           />
         </div>
 

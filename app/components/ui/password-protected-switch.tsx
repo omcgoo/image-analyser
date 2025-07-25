@@ -6,15 +6,13 @@ interface PasswordProtectedSwitchProps {
   handleToggle: () => void
   onLabel: string
   offLabel: string
-  password: string
 }
 
 const PasswordProtectedSwitch: React.FC<PasswordProtectedSwitchProps> = ({
   isOn,
   handleToggle,
   onLabel,
-  offLabel,
-  password
+  offLabel
 }) => {
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [inputPassword, setInputPassword] = useState('')
@@ -32,15 +30,29 @@ const PasswordProtectedSwitch: React.FC<PasswordProtectedSwitchProps> = ({
     }
   }
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (inputPassword === password) {
-      setShowPasswordModal(false)
-      setError('')
-      setInputPassword('')
-      handleToggle()
-    } else {
-      setError('Incorrect password')
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: inputPassword }),
+      })
+      
+      const data = await response.json()
+      
+      if (data.success) {
+        setShowPasswordModal(false)
+        setError('')
+        setInputPassword('')
+        handleToggle()
+      } else {
+        setError(data.error || 'Incorrect password')
+      }
+    } catch {
+      setError('Network error. Please try again.')
     }
   }
 
