@@ -3,9 +3,17 @@ import OpenAI from 'openai'
 import { getOpenAIApiKey } from '../config/openai'
 import sharp from 'sharp'
 
-const openai = new OpenAI({
-  apiKey: getOpenAIApiKey(),
-})
+// Lazy load OpenAI client to avoid build-time API key check
+let openai: OpenAI | null = null
+
+function getOpenAIClient() {
+  if (!openai) {
+    openai = new OpenAI({
+      apiKey: getOpenAIApiKey(),
+    })
+  }
+  return openai
+}
 
 const MAX_IMAGE_SIZE = 256
 const MAX_BASE64_LENGTH = 60000
@@ -59,7 +67,7 @@ export async function POST(req: NextRequest) {
     const base64Image = compressedImageData.split(',')[1];
 
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAIClient().chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
