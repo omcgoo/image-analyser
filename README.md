@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SVG Analyzer
+
+A modern web application for analyzing SVG files and generating relevant tags using AI. Built with Next.js, React, and OpenAI integration.
+
+## Features
+
+- **SVG Analysis**: Upload and analyze SVG files with AI-powered tag generation
+- **Bulk Processing**: Handle multiple files at once
+- **Test Mode**: Toggle between AI analysis and test mode for development
+- **Modern UI**: Clean, responsive interface with Tailwind CSS
+- **Real-time Processing**: Live feedback during analysis
+- **Tag Management**: Copy generated tags to clipboard
+
+## Tech Stack
+
+- **Framework**: Next.js 15.0.3
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **AI Integration**: OpenAI API
+- **Icons**: Lucide React
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/omcgoo/image-analyser.git
+cd image-analyser
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+Create a `.env.local` file in the root directory:
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Single Upload**: Upload individual SVG files for analysis
+2. **Bulk Upload**: Upload multiple files at once
+3. **Test Mode**: Toggle between AI analysis and test mode using the switch
+4. **Settings**: Customize AI prompts and temperature settings
+5. **Copy Tags**: Click the copy button to copy generated tags to clipboard
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+app/
+├── api/                    # API routes
+│   ├── analyze/           # Single file analysis
+│   ├── analyze-bulk/      # Bulk file analysis
+│   └── config/            # Configuration files
+├── components/            # React components
+│   ├── ui/               # UI components
+│   ├── ImageUploader.tsx # File upload component
+│   ├── TagList.tsx       # Tag display component
+│   └── SettingsPanel.tsx # Settings panel
+├── hooks/                # Custom React hooks
+└── page.tsx              # Main page component
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `POST /api/analyze` - Analyze single SVG file
+- `POST /api/analyze-bulk` - Analyze multiple SVG files
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+### Environment Variables
+
+- `OPENAI_API_KEY` - Your OpenAI API key (required for AI analysis)
+
+## Security
+
+- API keys are stored in environment variables
+- `.env.local` is gitignored to prevent accidental commits
+- No sensitive data is stored in the repository
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Support
+
+For issues and questions, please open an issue on GitHub.
